@@ -1,0 +1,160 @@
+
+
+<!-- Side bar from: https://www.w3schools.com/howto/howto_css_sidebar_responsive.asp -->
+<html>
+    <head>
+  <style>
+    body{ 
+      font-size: 15pt;
+      font-family: arial;
+    }
+    
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+}
+ 
+.sidebar a.active {
+  background-color: #7EA7F7;
+  color: white;
+}
+
+.sidebar a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+
+div.content {
+  margin-left: 200px;
+  padding: 1px 16px;
+  height: 1000px;
+}
+      
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}
+
+
+{# 5 Star Review code adpated from https://codepen.io/sidbelbase/pen/RwGZRbL #}
+.rate-area {
+	float: left;
+	border-style: none;
+}
+
+.rate-area:not(:checked) > input {
+	position: absolute;
+	top: -9999px;
+	clip: rect(0, 0, 0, 0);
+}
+
+.rate-area:not(:checked) > label {
+	float: right;
+	width: 1.0em;
+	overflow: hidden;
+	white-space: nowrap;
+	cursor: pointer;
+	font-size: 180%;
+	color: lightgrey;
+}
+
+.rate-area:not(:checked) > label:before {
+	content: "★";
+}
+
+.rate-area > input:checked ~ label {
+	color: blue;
+}
+
+.rate-area:not(:checked) > label:hover,
+.rate-area:not(:checked) > label:hover ~ label {
+	color: blue;
+}
+
+.rate-area > input:checked + label:hover,
+.rate-area > input:checked + label:hover ~ label,
+.rate-area > input:checked ~ label:hover,
+.rate-area > input:checked ~ label:hover ~ label,
+.rate-area > label:hover ~ input:checked ~ label {
+	color: blue;
+}
+
+      
+  </style>
+</head>
+      
+
+<!-- DON'T KNOW HOW TO MAKE THIS ACTIVE AND INACTIVE -->
+<div class="sidebar" id="sidebar_id">
+  <a class="inactive" href="/home">Home</a>
+  <a class="inactive" href="/preferences">Preferences</a>
+  <a class="inactive" href="/inventory">Inventory Overview </a>
+  <a class="inactive" href="/recipes">Recipes</a>
+  <a class="active" href="/reviews">Reviews</a>
+    <a class="inactive" href="/signout">Sign Out</a>
+</div>
+
+<!-- Page content -->
+<div class="content">
+  <body>
+  <h1>Ingredient Tracker</h1>
+   <!-- The sidebar -->
+    <h2>Reviews</h2>
+
+
+    <h3>Write a New Review</h3>
+    <form name="Rating" action="/add_review" method="post" onsubmit="">
+        Choose a Recipe: <SELECT name="recipe">
+        {% for r in recipes_list %}
+            <OPTION value="{{r}}">{{r}}</option>
+        {% endfor %}
+        </SELECT>
+        <br>
+      <ul class="rate-area">
+        <input type="radio" id="5-star" name="rating" value="5" checked="checked" /><label for="5-star" title="Amazing"></label>
+        <input type="radio" id="4-star" name="rating" value="4" /><label for="4-star" title="Good"></label>
+        <input type="radio" id="3-star" name="rating" value="3" /><label for="3-star" title="Average"></label>
+        <input type="radio" id="2-star" name="rating" value="2" /><label for="2-star" title="Not Good"></label>
+        <input type="radio" id="1-star" name="rating" value="1" /><label for="1-star" title="Bad"></label>
+      </ul>
+      <br><br><br><br>
+      <p>Your Thoughts: </p>
+      <p><input type="text" name="review_text" required>
+      <button type="submit" name="add_review" onclick="/add_review"> Add </button> </p>
+      <div>{{wrong_input}}</div>
+    </form>
+
+  <h3>Your Reviews</h3>
+  <div>
+    {% for n in reviews %}
+    <ul>
+    <form action="/delete_review" method="post">
+    <li><b>{{n[0]}} ({{n[1]}} Stars)</b>: {{n[2]}}
+        <button type="submit" name="delete_review" value="{{n[3]}}" onclick="/delete_review"> Delete </button></li>
+        </form>
+    </ul>
+    {% else %}
+        <li><em>No Reviews Found</em></li>
+    {% endfor %}
+ </div>
+</body>
+</div> 
+
+
+
+
+</html>

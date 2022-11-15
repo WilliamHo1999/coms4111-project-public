@@ -1,0 +1,123 @@
+
+
+<!-- Side bar from: https://www.w3schools.com/howto/howto_css_sidebar_responsive.asp --> 
+
+<html>
+    <head>
+  <style>
+    body{ 
+      font-size: 15pt;
+      font-family: arial;
+    }
+    
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+}
+ 
+.sidebar a.active {
+  background-color: #7EA7F7;
+  color: white;
+}
+
+.sidebar a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+
+div.content {
+  margin-left: 200px;
+  padding: 1px 16px;
+  height: 1000px;
+}
+      
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}
+      
+  </style>
+</head>
+      
+
+<!-- DON'T KNOW HOW TO MAKE THIS ACTIVE AND INACTIVE -->
+<div class="sidebar" id="sidebar_id">
+  <a class="inactive" href="/home">Home</a>
+  <a class="inactive" href="/preferences">Preferences</a>
+  <a class="active" href="/inventory">Inventory Overview </a>
+  <a class="inactive" href="/recipes">Recipes</a>
+  <a class="inactive" href="/reviews">Reviews</a>
+    <a class="inactive" href="/signout">Sign Out</a>
+</div>
+
+<!-- Page content -->
+<div class="content">
+  <body>
+  <h1>Ingredient Tracker</h1>
+   <!-- The sidebar -->
+
+    <h2>Inventory</h2>
+      <form method="POST" action="/add_item_to_inventory">
+      <h4> Add items </h4>
+      <p>Item name: <input type="text" name="itemname" required> </p>
+      <p>Expiry date: <input type="date" name="exp_date"> </p>
+      <p>Quantity: <input type="number" name="quantity" required> </p>
+    <p>Calories: <input type="number" name="calories"> </p>
+      <p><input type="submit" value="Add"> </p>
+    </form>
+          
+          <h4>Current inventory</h4>
+      <div>
+        <ul>
+        {% for n in ingredients %}
+        <form action="/remove_item_from_inventory" method="post">
+        <li><b>{{n.description}}</b>: Quantity: {{n.quantity}}, Expires: {{n.expiration_date}} 
+            <button type="submit" name="delete_invent_item" value = "{{n.ingredient_id}}" onclick="/remove_item_from_inventory"> Delete </button></li>
+            </form>
+
+        {% else %}
+            <em>Empty Inventory</em>
+        {% endfor %}
+        </ul>
+
+     </div>
+
+    
+      <h3> Here are some suggested recipes you can make with these ingredients: </h3>
+
+    <div>
+
+        {% for k,v  in prio_recipes.items() %}
+        <div><b>{{k}}</b></div>
+        <ul>
+        {% for i in v %}
+        <li> <a href="{{url_for('display_recipe', type=i)}}" value = "{{i}}"> <b>{{i}}</b> </a> </li>
+        {% endfor %}
+        </ul>
+        {% else %}
+        <ul>
+            <em>Empty Inventory</em>
+            </ul>
+
+        {% endfor %}
+     </div>
+
+</body>
+</div> 
+
+
+</html>

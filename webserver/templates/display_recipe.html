@@ -1,0 +1,112 @@
+
+
+<!-- Side bar from: https://www.w3schools.com/howto/howto_css_sidebar_responsive.asp --> 
+
+<html>
+    <head>
+  <style>
+    body{ 
+      font-size: 15pt;
+      font-family: arial;
+    }
+    
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+}
+ 
+.sidebar a.active {
+  background-color: #7EA7F7;
+  color: white;
+}
+
+.sidebar a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+
+div.content {
+  margin-left: 200px;
+  padding: 1px 16px;
+  height: 1000px;
+}
+      
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}
+      
+  </style>
+</head>
+      
+
+<!-- DON'T KNOW HOW TO MAKE THIS ACTIVE AND INACTIVE -->
+<div class="sidebar" id="sidebar_id">
+  <a class="inactive" href="/home">Home</a>
+  <a class="inactive" href="/preferences">Preferences</a>
+  <a class="inactive" href="/inventory">Inventory Overview </a>
+  <a class="active" href="/recipes">Recipes</a>
+  <a class="inactive" href="/reviews">Reviews</a>
+    <a class="inactive" href="/signout">Sign Out</a>
+
+</div>
+
+<!-- Page content -->
+<div class="content">
+  <body>
+  <h1>Ingredient Tracker</h1>
+   <!-- The sidebar -->
+    
+    <h2>Recipe: {{recipe_name}}</h2>
+      <h3>{{avg_star}} / 5.0 Stars </h3>
+      <h3>Ingredients</h3>
+      <div>
+         <ul>
+        {% for n in recipe_ing %}
+        {% if n.expiration_date %}
+        <li style="color:green">{{n.description}}</li>
+             {% else %}
+         <li style="color:red">{{n.description}}</li>
+         {% endif %}
+                  {% else %}
+            <em>No ingredients added</em>
+        {% endfor %}
+          </ul>
+        </div>
+       <h3>Instructions</h3>
+      <div>
+        {% for n in instruction %}
+          <div>{{n}}</div>
+                  {% else %}
+            <em>No instructions added</em>
+        {% endfor %}
+        </div>
+      <h3> Reviews</h3>
+          <div>
+            {% for r in review_text %}
+              <div> <b>{{r.username}} </b> ({{r.stars}} stars) and wrote: {{r.rev_text}} </div>
+            {% else %}
+            <em>No reviews of this recipe</em>
+              {% endfor %}
+
+      </div>
+              
+
+</body>
+</div> 
+    
+</html>

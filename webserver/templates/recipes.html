@@ -1,0 +1,91 @@
+
+
+<!-- Side bar from: https://www.w3schools.com/howto/howto_css_sidebar_responsive.asp --> 
+
+<html>
+    <head>
+  <style>
+    body{ 
+      font-size: 15pt;
+      font-family: arial;
+    }
+    
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+}
+ 
+.sidebar a.active {
+  background-color: #7EA7F7;
+  color: white;
+}
+
+.sidebar a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+
+div.content {
+  margin-left: 200px;
+  padding: 1px 16px;
+  height: 1000px;
+}
+      
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}
+      
+  </style>
+</head>
+      
+
+<!-- DON'T KNOW HOW TO MAKE THIS ACTIVE AND INACTIVE -->
+<div class="sidebar" id="sidebar_id">
+  <a class="inactive" href="/home">Home</a>
+  <a class="inactive" href="/preferences">Preferences</a>
+  <a class="inactive" href="/inventory">Inventory Overview </a>
+  <a class="active" href="/recipes">Recipes</a>
+  <a class="inactive" href="/reviews">Reviews</a>
+    <a class="inactive" href="/signout">Sign Out</a>
+</div>
+
+<!-- Page content -->
+<div class="content">
+  <body>
+  <h1>Ingredient Tracker</h1>
+   <!-- The sidebar -->
+
+    <h2>Recipes</h2>
+       <div>
+        {% for n in rescipes %}
+        <ul>
+
+            <li> 
+<a href="{{url_for('display_recipe', type=n)}}" value = "{{n}}"> <b>{{n}}</b> </a> 
+            </li>   
+         </ul>
+        {% endfor %}
+     </div>
+        <br> 
+
+</body>
+</div> 
+
+
+    
+</html>

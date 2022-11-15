@@ -1,0 +1,22 @@
+<html>
+  <style>
+    body{ 
+      font-size: 15pt;
+      font-family: arial;
+    }
+  </style>
+
+
+    <body>
+      <h1>Ingredient Tracker</h1>
+      <h2>Sign Up</h2>
+    <form method="POST" action="/add_user">
+        <p>Username: <input type="text" name="uname" required> </p>
+        <p>Email: <input type="text" name="email" required> </p>
+        <p>Password: <input type="text" name="passw" required> </p>
+        <div>{{wrong_password}}</div>
+        <p> <button type="submit" name="add_user" onclick="/add_user"> Sign Up </button> </p>
+    </form>
+    <a href={{url_for('index')}}> Go Back to Login </a>
+    </body>
+</html>
